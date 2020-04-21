@@ -36,8 +36,10 @@ export default function App() {
   async function handleLikeRepository(id) {
     const response = await api.post(`/repositories/${id}/like`);
     const updatedRepo = response.data;
-    const otherRepositories = repositories.filter( r => r.id !== id);
-    setRepositories([updatedRepo, ...otherRepositories]);
+    const repoIndex = repositories.findIndex( r => r.id === id);
+    const newRepositories = repositories.slice()
+    newRepositories.splice(repoIndex, 1, updatedRepo);
+    setRepositories([...newRepositories]);
   }
 
 
